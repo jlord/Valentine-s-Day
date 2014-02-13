@@ -2,16 +2,44 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <script src="http://code.jquery.com/jquery-1.7.1.min.js" type="text/javascript"></script>  
-  <title>Happy Valentine's Day Max!</title>
+  <script src="jquery-1.7.1.min.js" type="text/javascript"></script>  
+  <title>Happy Valentine's Day Stephanie!</title>
 <link rel="icon" type="image/jpg" href="favicon.jpg">
 <style>
-/* HELLO MAX! THIS IS MY CSS! */
+.black_overlay {
+    display: none;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    z-index:1001;
+    -moz-opacity: 0.8;
+    opacity:.80;
+    filter: alpha(opacity=80);
+}
+.white_content {
+    display: none;
+    position: absolute;
+    text-align: center;
+    top: 25%;
+    left: 25%;
+    width: 50%;
+    height: 30%;
+    padding: 36px;
+    border: 16px solid orange;
+    background-color: white;
+    z-index:1002;
+    overflow: auto;
+}
+
+/* HELLO THIS IS THE ALERT CSS! */
 body {
 	background-image: url('tandem_grey.png');
 }
 body::before {
-	content: url('tandem_grey.png') url('broken.png') url('clock.png') url('colors.png')  url('theCertificate.png') url('thePerks.png');
+	content: url('tandem_grey.png') url('broken.png') url('clock.png') url('colors.png')  url('theCertificate.png') url('thePerks.png') url('favicon.jpg');
 	display: none;
 }
 .certificate {
@@ -23,6 +51,10 @@ body::before {
 	background: #fff;
 	background-image: url('thePerks.png');
 	box-shadow: 0 0 5px #888;
+}
+
+.valentine {
+  background-image: url('favicon.jpg');
 }
 .no {
 	background-image: url('broken.png');
@@ -48,35 +80,111 @@ body::before {
 	var beardedBoo = function() {
 		var body = $('body'),
 		    image = $("#image");
-		body.removeClass("no").removeClass("maybe")
-		image.removeClass("benefits").removeClass("certificate")
-		var answer = prompt("Will you be my valentine? Yes, No, Maybe?").toLowerCase()
+		body.removeClass("no").removeClass("maybe").removeClass("valentine");
+		image.removeClass("benefits").removeClass("certificate");
+		var dialog = null;
+		switch(lang)
+    {
+      case 'deutsch':
+        dialog = "Magst Du mein Valentine sein? Ja, Nein, Vielleicht?";
+      break;
+      case 'französisch':
+        dialog = "Aurait-tu être mon Valentin? Oui, Non, Peut-être?";
+      break;
+      default:
+        dialog = "Will you be my valentine? Yes, No, Maybe?";
+    }
+    var answer = prompt(dialog)
+    if (answer == null) {
+      //setTimeout(beardedBoo, 100);
+      document.location.reload(true);
+      return false;
+    }
+    answer = answer.toLowerCase()
 /* .toLowerCase IS BEST PRACTICE! IT'S ALSO OK IF YOU TYPE THE FIRST LETTER INSTEAD OF THE WORD! */
-		if (answer == "yes" || answer == 'y') {
+		if (answer == "yes" || answer == 'y' || answer == "ja" || answer == 'j' || answer == "oui" || answer == 'o') {
 			body.addClass("yes")
 			image.addClass("certificate")
-		} else if (answer == "maybe" || answer == 'm') {
+		} else if (answer == "maybe" || answer == 'm' || answer == "vielleicht" || answer == 'v' || answer == "peut-être" || answer == 'p') {
 			body.addClass("maybe")
+			switch(lang)
+			{
+        case 'deutsch':
+          dialog = "Vielleicht sind Dir die vielen Vorteile nicht bewusst.";
+        break;
+        case 'französisch':
+          dialog = "Peut-être tu n'êtes pas au courant des nombreux avantages.";
+        break;
+        default:
+          dialog = "Perhaps you are not aware of the many benefits.";
+      }
 /* I WANTED THE BG TO CHANGE BEFORE THE ALERT AND THE IMAGE AFTER THE PROMPT AND THE NEXT PROMPT AFTER THAT! I LEARNED THAT IF ALERT AD IMAGE ARE NOT IN THE setTimeout TOGETHER, IT DOES THEM AT THE SAME TIME. */
-			setTimeout(beardedBoo, 6000)
-			setTimeout(function() {
-				alert("Perhaps you are not aware of the many benefits")
-				image.addClass("benefits")
-			}, 200)
+			if(confirm(dialog)) {
+  			image.addClass("benefits")
+        setTimeout(beardedBoo, 4000);
+      } else {
+        document.location.reload(true);
+      }	
+      
 /* HEY!!! */
-		} else {
+		} else if (answer == "no" || answer == 'n' || answer == "nein" || answer == 'non') {
 			body.addClass("no")
-			setTimeout(function() {
-				alert("Say it isn't so. Please try again.")
-				beardedBoo()
-			}, 200)
+			switch(lang)
+			{
+        case 'deutsch':
+          dialog = "Sag, daß es nicht so ist. Bitte versuche es erneut!";
+        break;
+        case 'französisch':
+          dialog = "Disons que c'est pas le cas. S'il te plaît essayez de nouveau!";
+        break;
+        default:
+          dialog = "Say it isn't so. Please try again!";
+      }
+			if(confirm(dialog)) {
+        setTimeout(beardedBoo, 300);
+      } else {
+        document.location.reload(true);
+      }
+		} else {
+		  setTimeout(beardedBoo, 2500);
 		}
 	}
-    setTimeout(beardedBoo, 300)
+    
+    function start() {
+    /*
+    <p>To display a lightbox click 
+    <a href = "javascript:void(0)" 
+    onclick = "document.getElementById('light').style.display='block';
+    document.getElementById('fade').style.display='block'"
+    >here</a>
+    </p>
+    */
+      document.getElementById('light').style.display='block';
+      document.getElementById('fade').style.display='block';
+      $('body').addClass('valentine');
+    } 
+    setTimeout(start, 300)
+    
+    var lang = ""
+    function selectLang(sprache) {
+      document.getElementById('light').style.display='none';
+      document.getElementById('fade').style.display='none';   
+      lang = sprache
+      setTimeout(beardedBoo, 100)
+    }
 /* ALL THESE ALERTS/PROMPTS COULD GET ANNOYING, IT'S BEST TO JUST BE MY VALENTINE */
 	</script>
 
-<div id="image"></div>
- 
+  <div id="image"></div>
+
+  <div id="light" class="white_content"><h2>Valentine-s-Day</h2>Auf welche Sprache möchtest Du antworten?
+    <br> 
+    <a href = "javascript:selectLang('englisch')">englisch</a>
+    <a href = "javascript:selectLang('deutsch')">deutsch</a>
+    <a href = "javascript:selectLang('französisch')">französisch</a>
+  </div>
+
+  <div id="fade" class="black_overlay"></div> 
+
 </body>
 </html>
