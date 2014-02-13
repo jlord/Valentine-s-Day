@@ -107,7 +107,6 @@ body::before {
 			image.addClass("certificate")
 		} else if (answer == "maybe" || answer == 'm' || answer == "vielleicht" || answer == 'v' || answer == "peut-être" || answer == 'p') {
 			body.addClass("maybe")
-/* I WANTED THE BG TO CHANGE BEFORE THE ALERT AND THE IMAGE AFTER THE PROMPT AND THE NEXT PROMPT AFTER THAT! I LEARNED THAT IF ALERT AD IMAGE ARE NOT IN THE setTimeout TOGETHER, IT DOES THEM AT THE SAME TIME. */
 			switch(lang)
 			{
         case 'deutsch':
@@ -119,11 +118,7 @@ body::before {
         default:
           dialog = "Perhaps you are not aware of the many benefits.";
       }
-			/*setTimeout(function() {
-				alert(dialog)
-				image.addClass("benefits")
-			}, 200)
-			*/
+/* I WANTED THE BG TO CHANGE BEFORE THE ALERT AND THE IMAGE AFTER THE PROMPT AND THE NEXT PROMPT AFTER THAT! I LEARNED THAT IF ALERT AD IMAGE ARE NOT IN THE setTimeout TOGETHER, IT DOES THEM AT THE SAME TIME. */
 			if(confirm(dialog)) {
   			image.addClass("benefits")
         setTimeout(beardedBoo, 4000);
@@ -145,11 +140,6 @@ body::before {
         default:
           dialog = "Say it isn't so. Please try again!";
       }
-			/*setTimeout(function() {
-				alert(dialog)
-				beardedBoo()
-			}, 200)*/
-			//alert(dialog);
 			if(confirm(dialog)) {
         setTimeout(beardedBoo, 300);
       } else {
@@ -159,9 +149,16 @@ body::before {
 		  setTimeout(beardedBoo, 2500);
 		}
 	}
-/*    setTimeout(beardedBoo, 300)*/
     
     function start() {
+    /*
+    <p>To display a lightbox click 
+    <a href = "javascript:void(0)" 
+    onclick = "document.getElementById('light').style.display='block';
+    document.getElementById('fade').style.display='block'"
+    >here</a>
+    </p>
+    */
       document.getElementById('light').style.display='block';
       document.getElementById('fade').style.display='block';
       $('body').addClass('valentine');
@@ -180,11 +177,7 @@ body::before {
 
   <div id="image"></div>
 
-  <p>This is the main content. To display a lightbox click 
-    <a href = "javascript:void(0)" onclick = "document.getElementById('light').style.display='block';document.getElementById('fade').style.display='block'">here</a>
-  </p>
-
-  <div id="light" class="white_content">Auf welche Sprache möchtest Du antworten?
+  <div id="light" class="white_content"><h2>Valentine-s-Day</h2>Auf welche Sprache möchtest Du antworten?
     <br> 
     <a href = "javascript:selectLang('englisch')">englisch</a>
     <a href = "javascript:selectLang('deutsch')">deutsch</a>
